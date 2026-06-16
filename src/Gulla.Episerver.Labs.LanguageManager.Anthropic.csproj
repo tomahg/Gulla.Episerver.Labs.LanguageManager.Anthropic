@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Title>Gulla.Episerver.Labs.LanguageManager.Anthropic</Title>
+    <PackageId>Gulla.Episerver.Labs.LanguageManager.Anthropic</PackageId>
+    <Authors>Tomas Hensrud Gulla</Authors>
+    <Version>1.0.0</Version>
+    <PackageVersion>1.0.0</PackageVersion>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Description>An addon for EPiServer.Labs.LanguageManager that enables translation using Anthropic Claude.</Description>
+    <PackageTags>Optimizely LanguageManager AI Translation Anthropic Claude Translator</PackageTags>
+    <PackageProjectUrl>https://github.com/tomahg/Gulla.Episerver.Labs.LanguageManager.Anthropic/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/tomahg/Gulla.Episerver.Labs.LanguageManager.Anthropic/</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes>Initial release</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EPiServer.Labs.LanguageManager" Version="[5.0.0, 6.0.0)" />
+    <PackageReference Include="EPiServer.CMS.UI" Version="[12.0.2, 13.0.0)" />
+    <PackageReference Include="Anthropic" Version="[12.29.0, 13.0.0)" />
+  </ItemGroup>
+
+</Project>
