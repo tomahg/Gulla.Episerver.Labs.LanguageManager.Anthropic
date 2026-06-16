@@ -9,19 +9,27 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.0" />
     <PackageReference Include="xunit" Version="2.9.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
   </ItemGroup>
 
   <!--
-    The translation logic under test (AnthropicSystemPrompt, AnthropicResponse) is
-    pure and dependency-free. The source files are compiled directly into the test
-    assembly so the tests stay fast and isolated, without dragging in the
-    EPiServer/Anthropic dependencies that the main addon project carries.
+    The translation logic under test is SDK-free and EPiServer-free: the pure
+    helpers, the request builder, the seam interface, and the orchestrator. Their
+    source files are compiled directly into the test assembly so the tests stay
+    fast and isolated, without the EPiServer/Anthropic dependencies the main addon
+    project carries. The only thing not tested here is AnthropicTranslationClient,
+    the thin SDK adapter, which is exercised via the fake.
   -->
   <ItemGroup>
     <Compile Include="..\..\src\AnthropicSystemPrompt.cs" Link="AnthropicSystemPrompt.cs" />
     <Compile Include="..\..\src\AnthropicResponse.cs" Link="AnthropicResponse.cs" />
+    <Compile Include="..\..\src\LanguageManagerAnthropicOptions.cs" Link="LanguageManagerAnthropicOptions.cs" />
+    <Compile Include="..\..\src\AnthropicModels.cs" Link="AnthropicModels.cs" />
+    <Compile Include="..\..\src\TranslationRequest.cs" Link="TranslationRequest.cs" />
+    <Compile Include="..\..\src\IAnthropicTranslationClient.cs" Link="IAnthropicTranslationClient.cs" />
+    <Compile Include="..\..\src\LanguageManagerAnthropicService.cs" Link="LanguageManagerAnthropicService.cs" />
   </ItemGroup>
 
 </Project>
