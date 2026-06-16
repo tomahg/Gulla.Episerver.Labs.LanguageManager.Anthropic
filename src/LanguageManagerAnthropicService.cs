@@ -31,12 +31,7 @@ namespace Gulla.Episerver.Labs.LanguageManager.Anthropic
         {
             var options = _options.Value;
 
-            var systemPrompt = $"You are a translator. Translate from {fromLanguageName} to {toLanguageName}.";
-            if (!string.IsNullOrEmpty(options.AnthropicExtraPrompt))
-            {
-                systemPrompt += " " + options.AnthropicExtraPrompt;
-            }
-            systemPrompt += " Output only the translation, with no preamble or explanation.";
+            var systemPrompt = AnthropicSystemPrompt.Build(fromLanguageName, toLanguageName, options.AnthropicExtraPrompt);
 
             var client = new AnthropicClient { ApiKey = options.AnthropicApiKey };
 
@@ -52,18 +47,12 @@ namespace Gulla.Episerver.Labs.LanguageManager.Anthropic
 
             var response = await client.Messages.Create(parameters);
 
-            var translatedText = response.Content
+            var candidateTexts = response.Content
                 .Select(block => block.Value)
                 .OfType<TextBlock>()
-                .Select(block => block.Text)
-                .FirstOrDefault();
+                .Select(block => block.Text);
 
-            if (!string.IsNullOrEmpty(translatedText))
-            {
-                return translatedText;
-            }
-
-            return "Error translating text";
+            return AnthropicResponse.ExtractTranslation(candidateTexts);
         }
     }
 }

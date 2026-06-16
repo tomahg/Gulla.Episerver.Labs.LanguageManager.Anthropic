@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Gulla.Episerver.Labs.LanguageManager.Anthropic.csproj" />
+  </Folder>
+  <Folder Name="/test/">
+    <Project Path="test/Gulla.Episerver.Labs.LanguageManager.Anthropic.Tests/Gulla.Episerver.Labs.LanguageManager.Anthropic.Tests.csproj" />
+  </Folder>
+</Solution>
