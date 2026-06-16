@@ -5,35 +5,39 @@ namespace Gulla.Episerver.Labs.LanguageManager.Anthropic.Tests
     public class AnthropicResponseTests
     {
         [Fact]
-        public void ExtractTranslation_ReturnsFirstText_WhenPresent()
+        public void ExtractTranslation_ReturnsSuccessWithFirstText_WhenPresent()
         {
-            var result = AnthropicResponse.ExtractTranslation(new[] { "Bonjour" });
+            var outcome = AnthropicResponse.ExtractTranslation(new[] { "Bonjour" });
 
-            Assert.Equal("Bonjour", result);
+            Assert.True(outcome.IsSuccess);
+            Assert.Equal("Bonjour", outcome.Text);
         }
 
         [Fact]
         public void ExtractTranslation_SkipsBlankBlocks_AndReturnsFirstNonEmpty()
         {
-            var result = AnthropicResponse.ExtractTranslation(new[] { null, "", "   ", "Hola" });
+            var outcome = AnthropicResponse.ExtractTranslation(new[] { null, "", "   ", "Hola" });
 
-            Assert.Equal("Hola", result);
+            Assert.True(outcome.IsSuccess);
+            Assert.Equal("Hola", outcome.Text);
         }
 
         [Fact]
-        public void ExtractTranslation_ReturnsError_WhenNoBlocks()
+        public void ExtractTranslation_ReturnsFailure_WhenNoBlocks()
         {
-            var result = AnthropicResponse.ExtractTranslation(new string?[0]);
+            var outcome = AnthropicResponse.ExtractTranslation(new string?[0]);
 
-            Assert.Equal(AnthropicResponse.ErrorMessage, result);
+            Assert.False(outcome.IsSuccess);
+            Assert.Equal(AnthropicResponse.NoTranslationMessage, outcome.Text);
         }
 
         [Fact]
-        public void ExtractTranslation_ReturnsError_WhenAllBlocksBlank()
+        public void ExtractTranslation_ReturnsFailure_WhenAllBlocksBlank()
         {
-            var result = AnthropicResponse.ExtractTranslation(new[] { null, "", "   " });
+            var outcome = AnthropicResponse.ExtractTranslation(new[] { null, "", "   " });
 
-            Assert.Equal(AnthropicResponse.ErrorMessage, result);
+            Assert.False(outcome.IsSuccess);
+            Assert.Equal(AnthropicResponse.NoTranslationMessage, outcome.Text);
         }
     }
 }

@@ -25,6 +25,7 @@
   <ItemGroup>
     <Compile Include="..\..\src\AnthropicSystemPrompt.cs" Link="AnthropicSystemPrompt.cs" />
     <Compile Include="..\..\src\AnthropicResponse.cs" Link="AnthropicResponse.cs" />
+    <Compile Include="..\..\src\TranslationOutcome.cs" Link="TranslationOutcome.cs" />
     <Compile Include="..\..\src\LanguageManagerAnthropicOptions.cs" Link="LanguageManagerAnthropicOptions.cs" />
     <Compile Include="..\..\src\AnthropicModels.cs" Link="AnthropicModels.cs" />
     <Compile Include="..\..\src\TranslationRequest.cs" Link="TranslationRequest.cs" />

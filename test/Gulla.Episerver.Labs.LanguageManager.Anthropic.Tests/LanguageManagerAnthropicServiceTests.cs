@@ -36,14 +36,15 @@ namespace Gulla.Episerver.Labs.LanguageManager.Anthropic.Tests
         }
 
         [Fact]
-        public async Task TranslateText_ReturnsClientResult()
+        public async Task TranslateText_ReturnsClientOutcome()
         {
             var options = new LanguageManagerAnthropicOptions { AnthropicApiKey = "key" };
-            var fake = new FakeAnthropicTranslationClient("Hei");
+            var fake = new FakeAnthropicTranslationClient(TranslationOutcome.Success("Hei"));
 
-            var result = await Service(options, fake).TranslateText("Hello", "English", "Norwegian");
+            var outcome = await Service(options, fake).TranslateText("Hello", "English", "Norwegian");
 
-            Assert.Equal("Hei", result);
+            Assert.True(outcome.IsSuccess);
+            Assert.Equal("Hei", outcome.Text);
         }
     }
 }

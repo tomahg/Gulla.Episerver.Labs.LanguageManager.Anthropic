@@ -24,7 +24,7 @@ namespace Gulla.Episerver.Labs.LanguageManager.Anthropic
             _client = new AnthropicClient { ApiKey = apiKey };
         }
 
-        public async Task<string> Send(TranslationRequest request, CancellationToken cancellationToken = default)
+        public async Task<TranslationOutcome> Send(TranslationRequest request, CancellationToken cancellationToken = default)
         {
             var parameters = new MessageCreateParams
             {

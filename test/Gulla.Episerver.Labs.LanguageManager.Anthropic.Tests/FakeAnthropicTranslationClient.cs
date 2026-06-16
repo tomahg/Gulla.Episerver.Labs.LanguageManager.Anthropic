@@ -6,21 +6,21 @@ namespace Gulla.Episerver.Labs.LanguageManager.Anthropic.Tests
 {
     /// <summary>
     /// Test double for <see cref="IAnthropicTranslationClient"/>. Captures the request
-    /// it was sent and returns a canned result, so the orchestrator's build-and-send
+    /// it was sent and returns a canned outcome, so the orchestrator's build-and-send
     /// wiring can be asserted without calling the API.
     /// </summary>
     public sealed class FakeAnthropicTranslationClient : IAnthropicTranslationClient
     {
-        private readonly string _result;
+        private readonly TranslationOutcome _result;
 
-        public FakeAnthropicTranslationClient(string result = "translated")
+        public FakeAnthropicTranslationClient(TranslationOutcome? result = null)
         {
-            _result = result;
+            _result = result ?? TranslationOutcome.Success("translated");
         }
 
         public TranslationRequest? LastRequest { get; private set; }
 
-        public Task<string> Send(TranslationRequest request, CancellationToken cancellationToken = default)
+        public Task<TranslationOutcome> Send(TranslationRequest request, CancellationToken cancellationToken = default)
         {
             LastRequest = request;
             return Task.FromResult(_result);

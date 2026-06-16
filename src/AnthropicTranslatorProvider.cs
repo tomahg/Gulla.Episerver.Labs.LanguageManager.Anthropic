@@ -34,8 +34,9 @@ namespace Gulla.Episerver.Labs.LanguageManager.Anthropic
             {
                 var fromLanguageName = new CultureInfo(fromLang).DisplayName;
                 var toLanguageName = new CultureInfo(toLang).DisplayName;
-                translateTextResult.Text = _anthropicService.Service.TranslateText(inputText, fromLanguageName, toLanguageName).Result;
-                translateTextResult.IsSuccess = true;
+                var outcome = _anthropicService.Service.TranslateText(inputText, fromLanguageName, toLanguageName).Result;
+                translateTextResult.IsSuccess = outcome.IsSuccess;
+                translateTextResult.Text = outcome.Text;
             }
             catch (Exception e)
             {

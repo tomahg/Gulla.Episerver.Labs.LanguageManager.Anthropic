@@ -17,8 +17,11 @@ A provider-agnostic value describing one translation turn: model, max tokens, op
 ## System Prompt builder
 **`AnthropicSystemPrompt`** — pure construction of the translation system prompt, including the preamble guard.
 
+## Translation Outcome
+**`TranslationOutcome`** — the result of a translation turn: either the translated text (`Success`) or a failure message (`Failure`). The single honest representation of "no usable translation," replacing a sentinel string treated as success. The seam and Orchestrator return it; the Translator Provider maps it to `TranslateTextResult`. Infrastructure errors (network, auth, missing key) remain a separate channel via the provider's `try/catch`.
+
 ## Response extraction
-**`AnthropicResponse`** — pure selection of the translated text from the response's text blocks (used inside the real Anthropic Translation Client).
+**`AnthropicResponse`** — pure decision of the Translation Outcome from the response's text blocks; the single place that decides what counts as a failed translation (used inside the real Anthropic Translation Client).
 
 ## Model identifiers
 **`AnthropicModels`** — constants for currently available Claude models; `AnthropicModel` configuration remains free text.

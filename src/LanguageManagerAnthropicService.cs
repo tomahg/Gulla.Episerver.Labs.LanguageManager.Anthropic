@@ -27,7 +27,7 @@ namespace Gulla.Episerver.Labs.LanguageManager.Anthropic
         /// <param name="text">The text to translate</param>
         /// <param name="fromLanguageName">The name of the source language</param>
         /// <param name="toLanguageName">The name of the destination language</param>
-        public Task<string> TranslateText(string text, string fromLanguageName, string toLanguageName)
+        public Task<TranslationOutcome> TranslateText(string text, string fromLanguageName, string toLanguageName)
         {
             var request = TranslationRequest.From(_options.Value, fromLanguageName, toLanguageName, text);
             return _client.Send(request);

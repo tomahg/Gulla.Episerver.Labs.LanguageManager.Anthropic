@@ -10,6 +10,6 @@ namespace Gulla.Episerver.Labs.LanguageManager.Anthropic
     /// </summary>
     public interface IAnthropicTranslationClient
     {
-        Task<string> Send(TranslationRequest request, CancellationToken cancellationToken = default);
+        Task<TranslationOutcome> Send(TranslationRequest request, CancellationToken cancellationToken = default);
     }
 }
