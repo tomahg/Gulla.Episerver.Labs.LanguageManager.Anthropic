@@ -1,0 +1,1 @@
+dotnet pack src\Gulla.Episerver.Labs.LanguageManager.Anthropic.csproj -c Release
