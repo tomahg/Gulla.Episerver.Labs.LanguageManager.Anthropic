@@ -2,32 +2,31 @@ namespace Gulla.Episerver.Labs.LanguageManager.Anthropic
 {
     /// <summary>
     /// A provider-agnostic description of one translation turn. Built purely from
-    /// options and language names via <see cref="From"/>, so the request shape is
-    /// assertable without calling the API.
+    /// options, language names, and an already-resolved extra prompt via <see cref="From"/>,
+    /// so the request shape is assertable without calling the API or the CMS.
     /// </summary>
     public sealed record TranslationRequest(
         string Model,
         int MaxTokens,
-        double? Temperature,
         string SystemPrompt,
         string UserText)
     {
         /// <summary>
-        /// Build a <see cref="TranslationRequest"/> from the addon options and the
-        /// source/target language names. <see cref="Temperature"/> stays null when
-        /// the option is unset, so it is omitted from the API request.
+        /// Build a <see cref="TranslationRequest"/> from the addon options, the
+        /// source/target language names, and the resolved extra prompt (which the
+        /// caller obtains from the Extra Prompt Resolver).
         /// </summary>
         public static TranslationRequest From(
             LanguageManagerAnthropicOptions options,
             string fromLanguageName,
             string toLanguageName,
-            string text)
+            string text,
+            string? extraPrompt)
         {
             return new TranslationRequest(
                 options.AnthropicModel,
                 options.AnthropicMaxTokens,
-                options.AnthropicTemperature,
-                AnthropicSystemPrompt.Build(fromLanguageName, toLanguageName, options.AnthropicExtraPrompt),
+                AnthropicSystemPrompt.Build(fromLanguageName, toLanguageName, extraPrompt),
                 text);
         }
     }

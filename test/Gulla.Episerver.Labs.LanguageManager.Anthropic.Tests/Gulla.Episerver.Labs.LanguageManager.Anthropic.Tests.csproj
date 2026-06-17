@@ -30,6 +30,7 @@
     <Compile Include="..\..\src\AnthropicModels.cs" Link="AnthropicModels.cs" />
     <Compile Include="..\..\src\TranslationRequest.cs" Link="TranslationRequest.cs" />
     <Compile Include="..\..\src\IAnthropicTranslationClient.cs" Link="IAnthropicTranslationClient.cs" />
+    <Compile Include="..\..\src\IExtraPromptResolver.cs" Link="IExtraPromptResolver.cs" />
     <Compile Include="..\..\src\LanguageManagerAnthropicService.cs" Link="LanguageManagerAnthropicService.cs" />
   </ItemGroup>
 

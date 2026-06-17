@@ -8,40 +8,41 @@ namespace Gulla.Episerver.Labs.LanguageManager.Anthropic.Tests
     {
         private static LanguageManagerAnthropicService Service(
             LanguageManagerAnthropicOptions options,
-            IAnthropicTranslationClient client)
-            => new(Options.Create(options), client);
+            IAnthropicTranslationClient client,
+            IExtraPromptResolver resolver)
+            => new(Options.Create(options), client, resolver);
 
         [Fact]
-        public async Task TranslateText_SendsRequestBuiltFromOptionsAndLanguages()
+        public async Task TranslateText_SendsRequestBuiltFromOptionsAndResolvedExtraPrompt()
         {
             var options = new LanguageManagerAnthropicOptions
             {
                 AnthropicApiKey = "key",
                 AnthropicModel = AnthropicModels.ClaudeHaiku4_5,
                 AnthropicMaxTokens = 4096,
-                AnthropicExtraPrompt = "Keep it short.",
             };
-            var fake = new FakeAnthropicTranslationClient();
+            var fakeClient = new FakeAnthropicTranslationClient();
+            var resolver = new FakeExtraPromptResolver("Keep it short.");
 
-            await Service(options, fake).TranslateText("hello", "English", "Norwegian");
+            await Service(options, fakeClient, resolver).TranslateText("hello", "English", "Norwegian");
 
-            Assert.NotNull(fake.LastRequest);
-            Assert.Equal("hello", fake.LastRequest!.UserText);
-            Assert.Equal(AnthropicModels.ClaudeHaiku4_5, fake.LastRequest.Model);
-            Assert.Equal(4096, fake.LastRequest.MaxTokens);
-            Assert.Null(fake.LastRequest.Temperature);
+            Assert.NotNull(fakeClient.LastRequest);
+            Assert.Equal("hello", fakeClient.LastRequest!.UserText);
+            Assert.Equal(AnthropicModels.ClaudeHaiku4_5, fakeClient.LastRequest.Model);
+            Assert.Equal(4096, fakeClient.LastRequest.MaxTokens);
             Assert.Equal(
                 AnthropicSystemPrompt.Build("English", "Norwegian", "Keep it short."),
-                fake.LastRequest.SystemPrompt);
+                fakeClient.LastRequest.SystemPrompt);
         }
 
         [Fact]
         public async Task TranslateText_ReturnsClientOutcome()
         {
             var options = new LanguageManagerAnthropicOptions { AnthropicApiKey = "key" };
-            var fake = new FakeAnthropicTranslationClient(TranslationOutcome.Success("Hei"));
+            var fakeClient = new FakeAnthropicTranslationClient(TranslationOutcome.Success("Hei"));
+            var resolver = new FakeExtraPromptResolver();
 
-            var outcome = await Service(options, fake).TranslateText("Hello", "English", "Norwegian");
+            var outcome = await Service(options, fakeClient, resolver).TranslateText("Hello", "English", "Norwegian");
 
             Assert.True(outcome.IsSuccess);
             Assert.Equal("Hei", outcome.Text);

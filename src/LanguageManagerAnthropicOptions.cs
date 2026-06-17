@@ -9,12 +9,24 @@ namespace Gulla.Episerver.Labs.LanguageManager.Anthropic
         public int AnthropicMaxTokens { get; set; } = 8192;
 
         /// <summary>
-        /// Optional sampling temperature. When null (the default), no temperature is sent.
-        /// Note: Opus 4.7/4.8 reject temperature and will return HTTP 400 if a value is set.
-        /// Sonnet and Haiku models support it.
+        /// Optional extra instruction appended to the translation system prompt
+        /// (e.g. tone or formality). Used when no CMS-configured extra prompt applies.
         /// </summary>
-        public double? AnthropicTemperature { get; set; }
-
         public string? AnthropicExtraPrompt { get; set; }
+
+        /// <summary>
+        /// Optional content id of a CMS page that holds the extra prompt. When set,
+        /// <see cref="AnthropicExtraPromptPagePropertyName"/> must also be set. The
+        /// value of that property is then used as the extra prompt instead of
+        /// <see cref="AnthropicExtraPrompt"/>, so editors can manage it in the CMS.
+        /// </summary>
+        public int? AnthropicExtraPromptPageContentReference { get; set; }
+
+        /// <summary>
+        /// Optional name of the property on the configured page that holds the extra
+        /// prompt. When set, <see cref="AnthropicExtraPromptPageContentReference"/>
+        /// must also be set.
+        /// </summary>
+        public string? AnthropicExtraPromptPagePropertyName { get; set; }
     }
 }

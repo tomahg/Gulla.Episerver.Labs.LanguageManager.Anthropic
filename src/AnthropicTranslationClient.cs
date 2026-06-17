@@ -31,8 +31,6 @@ namespace Gulla.Episerver.Labs.LanguageManager.Anthropic
                 Model = request.Model,
                 MaxTokens = request.MaxTokens,
                 System = request.SystemPrompt,
-                // Temperature is only sent when set; null is omitted from the request.
-                Temperature = request.Temperature,
                 Messages = [new() { Role = Role.User, Content = request.UserText }]
             };
 

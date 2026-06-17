@@ -14,6 +14,7 @@ namespace Gulla.Episerver.Labs.LanguageManager.Anthropic
         public static IServiceCollection AddLanguageManagerAnthropic(this IServiceCollection services, Action<LanguageManagerAnthropicOptions> setupAction)
         {
             services.AddTransient<IAnthropicTranslationClient, AnthropicTranslationClient>();
+            services.AddTransient<IExtraPromptResolver, CmsExtraPromptResolver>();
             services.AddTransient<LanguageManagerAnthropicService, LanguageManagerAnthropicService>();
 
             services.AddOptions<LanguageManagerAnthropicOptions>().Configure<IConfiguration>((options, configuration) =>
