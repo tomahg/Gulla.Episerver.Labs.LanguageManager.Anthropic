@@ -1,5 +1,8 @@
 # Gulla.Episerver.Labs.LanguageManager.Anthropic 🤖
 
+This is the readme for the CMS 13 version, the version for CMS 12 is [over here](https://github.com/tomahg/Gulla.Episerver.Labs.LanguageManager.Anthropic/tree/cms12).
+
+
 This addon for Optimizely CMS enables EPiServer.Labs.LanguageManager to auto-translate content using Anthropic Claude.
 
 ## Installation

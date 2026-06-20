@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using System.Threading.Tasks;
 using EPiServer.Labs.LanguageManager.Business.Providers;
 using EPiServer.Labs.LanguageManager.Models;
 using EPiServer.ServiceLocation;
@@ -17,7 +18,7 @@ namespace Gulla.Episerver.Labs.LanguageManager.Anthropic
             return true;
         }
 
-        public TranslateTextResult Translate(string inputText, string fromLang, string toLang)
+        public async Task<TranslateTextResult> TranslateAsync(string inputText, string fromLang, string toLang)
         {
             var translateTextResult = new TranslateTextResult()
             {
@@ -34,7 +35,7 @@ namespace Gulla.Episerver.Labs.LanguageManager.Anthropic
             {
                 var fromLanguageName = new CultureInfo(fromLang).DisplayName;
                 var toLanguageName = new CultureInfo(toLang).DisplayName;
-                var outcome = _anthropicService.Service.TranslateText(inputText, fromLanguageName, toLanguageName).Result;
+                var outcome = await _anthropicService.Service.TranslateText(inputText, fromLanguageName, toLanguageName);
                 translateTextResult.IsSuccess = outcome.IsSuccess;
                 translateTextResult.Text = outcome.Text;
             }
